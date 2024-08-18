@@ -18,13 +18,14 @@ header .inner-logo a {
   position: fixed;
   top: 56px;
   left: 0;
+  z-index: 100;
 }
 .body .main {
   margin: 15px;
   position: relative;
   /* margin-left: 150px; */
   left: 150px;
-  width: calc(100% -180px);
+  width: calc(100% - 180px);
 }
 .sider .inner-menu ul {
   list-style: none;
