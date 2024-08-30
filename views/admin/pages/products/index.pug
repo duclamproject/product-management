@@ -1,7 +1,7 @@
 extends ../../layouts/default.pug
 
 block main 
-    h1 Danh sách sản phẩm
+    h1 Danh sách sản phẩm 
     .card.mb-3
         .card-header Bộ lọc và Tìm kiếm
         .card-body
@@ -20,6 +20,7 @@ block main
                             placeholder="Nhập từ khóa"
                             name="keyword"
                             class="form-control"
+                            value = keyword
                             )
                             .input-group-append
                                 button(
@@ -59,19 +60,3 @@ block main
                                 td 
                                     button(class = "btn btn-warning btn-sm") Sửa
                                     button(class = "btn btn-danger btn-sm ml-1") Xóa
-                        //- tr 
-                        //-     td 2
-                        //-     td 
-                        //-         img(
-                        //-             src="https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png"
-                        //-             alt="Sản phẩm 1"
-                        //-             witdh = "250px"
-                        //-             height = "50px"
-                        //-         )
-                        //-     td Sản phẩm 2
-                        //-     td 100$
-                        //-     td 
-                        //-         a(href="a" class = "badge badge-danger") Dừng hoạt động
-                        //-     td 
-                        //-         button(class = "btn btn-warning btn-sm") Sửa
-                        //-         button(class = "btn btn-danger btn-sm ml-1") Xóa

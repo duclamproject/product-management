@@ -24,6 +24,7 @@ if (formSearch) {
   let url = new URL(window.location.href);
   formSearch.addEventListener("submit", (e) => {
     e.preventDefault();
+    // PATH tới keyword.value
     const keyword = e.target.elements.keyword.value;
     if (keyword) {
       url.searchParams.set("keyword", keyword);

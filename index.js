@@ -9,7 +9,7 @@ database.connect();
 
 // public folder
 app.use(express.static("public"));
-// pug
+// PugJS
 app.set("views", "./views");
 app.set("view engine", "pug");
 // Routes

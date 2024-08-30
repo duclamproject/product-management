@@ -21,7 +21,7 @@ module.exports.index = async (req, res) => {
   let find = {
     deleted: false,
   };
-
+  // Status
   if (req.query.status) {
     find.status = req.query.status;
   }
@@ -35,6 +35,14 @@ module.exports.index = async (req, res) => {
     filterStatus[index].class = "active";
   }
 
+  // Keyword
+  let keyword = "";
+  if (req.query.keyword) {
+    keyword = req.query.keyword;
+    const regex = new RegExp(keyword, "i");
+    // Tìm kiếm chung chung
+    find.title = regex;
+  }
   const products = await Product.find(find);
   // console.log(products);
 
@@ -42,5 +50,6 @@ module.exports.index = async (req, res) => {
     pageTitle: "Trang sản phẩm",
     products: products,
     filterStatus: filterStatus,
+    keyword: keyword,
   });
 };
