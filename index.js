@@ -1,8 +1,11 @@
 const express = require("express");
+const methodOverride = require("method-override");
 // .env
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT;
+// Mehod Override
+app.use(methodOverride("_method"));
 // mongoose - database check
 const database = require("./config/database");
 database.connect();
