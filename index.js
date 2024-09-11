@@ -1,11 +1,15 @@
 const express = require("express");
 const methodOverride = require("method-override");
+const bodyParser = require("body-parser");
 // .env
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT;
 // Mehod Override
 app.use(methodOverride("_method"));
+// Body-Parser
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
 // mongoose - database check
 const database = require("./config/database");
 database.connect();
