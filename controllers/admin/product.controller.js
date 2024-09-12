@@ -80,6 +80,9 @@ module.exports.changeMulti = async (req, res) => {
 
 module.exports.deleteItem = async (req, res) => {
   const idDel = req.params.id;
-  await Product.updateOne({ _id: idDel }, { deleted: true });
+  await Product.updateOne(
+    { _id: idDel },
+    { deleted: true, deletedAt: new Date() }
+  );
   res.redirect("back");
 };
