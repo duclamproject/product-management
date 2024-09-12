@@ -90,6 +90,17 @@ const formChangeMulti = document.querySelector("[form-change-multi]");
 if (formChangeMulti) {
   formChangeMulti.addEventListener("submit", (e) => {
     e.preventDefault();
+
+    const formType = e.target.elements.type.value;
+    if (formType == "delete-all") {
+      const isConfirm = confirm(
+        "Bạn có muốn xóa tất cả bản ghi đã chọn không?"
+      );
+      if (!isConfirm) {
+        return;
+      }
+    }
+
     const idsChecked = document.querySelectorAll("input[name=id]:checked");
     const inputIds = document.querySelector("input[name=ids]");
     if (idsChecked.length > 0) {
