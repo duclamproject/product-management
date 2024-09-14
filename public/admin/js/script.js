@@ -105,8 +105,18 @@ if (formChangeMulti) {
     const inputIds = document.querySelector("input[name=ids]");
     if (idsChecked.length > 0) {
       const ids = [];
+      console.log(formType);
+
       idsChecked.forEach((item) => {
-        ids.push(item.getAttribute("value"));
+        const id = item.value;
+        if (formType == "change-position") {
+          const position = item
+            .closest("tr")
+            .querySelector("input[name=position]").value;
+          ids.push(`${id}-${position}`);
+        } else {
+          ids.push(id);
+        }
       });
       inputIds.value = ids.join(", ");
     } else {
