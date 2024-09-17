@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("../../controllers/admin/product.controller");
-
+const multer = require("multer");
+const storageHelpers = require("../../helpers/storage");
+const upload = multer({ storage: storageHelpers() });
 router.get("/", controller.index);
 router.patch("/change-status/:status/:id", controller.changeStatus);
 router.patch("/change-multi/", controller.changeMulti);
 router.delete("/delete-item/:id", controller.deleteItem);
 router.get("/create", controller.create);
-router.post("/create", controller.createPost);
+router.post("/create", upload.single("thumbnail"), controller.createPost);
 module.exports = router;
