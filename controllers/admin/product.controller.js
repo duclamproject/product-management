@@ -3,6 +3,7 @@ const Product = require("../../models/product.model");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
+const systemConfig = require("../../config/system");
 module.exports.index = async (req, res) => {
   // Bộ lọc
   const filterStatus = filterStatusHelper(req.query);
@@ -90,6 +91,7 @@ module.exports.changeMulti = async (req, res) => {
           deletedAt: new Date(),
         }
       );
+      req.flash("success", `Đã xóa thành công ${ids.length} sản phẩm!`);
       break;
     case "change-position":
       for (const item of ids) {
@@ -111,4 +113,25 @@ module.exports.deleteItem = async (req, res) => {
     { deleted: true, deletedAt: new Date() }
   );
   res.redirect("back");
+};
+
+module.exports.create = (req, res) => {
+  res.render("admin/pages/products/create", {
+    pageTitle: "Thêm mới sản phẩm",
+  });
+};
+
+module.exports.createPost = async (req, res) => {
+  req.body.price = parseInt(req.body.price);
+  req.body.discountPercentage = parseInt(req.body.discountPercentage);
+  req.body.stock = parseInt(req.body.stock);
+  if (req.body.position == "") {
+    const countProducts = await Product.countDocuments();
+    req.body.position = parseInt(countProducts + 1);
+  } else {
+    req.body.position = parseInt(req.body.position);
+  }
+  const product = new Product(req.body);
+  await product.save();
+  res.redirect(`${systemConfig.prefixAdmin}/products`);
 };
