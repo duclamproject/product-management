@@ -141,3 +141,33 @@ if (showAlert) {
   });
 }
 // End Show Alert
+
+// Upload Preview
+const uploadImage = document.querySelector("[upload-image]");
+if (uploadImage) {
+  const uploadImageInput = document.querySelector("[upload-image-input]");
+  const uploadImagePreview = document.querySelector("[upload-image-preview]");
+  uploadImageInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      uploadImagePreview.src = URL.createObjectURL(file);
+    }
+  });
+}
+// End Upload Preview
+// Clear Image Preview
+const clearImagePreview = document.querySelector("[clear-image-preview]");
+if (clearImagePreview) {
+  clearImagePreview.addEventListener("click", () => {
+    const uploadImageInput = document.querySelector("[upload-image-input]");
+    const uploadImagePreview = document.querySelector("[upload-image-preview]");
+
+    if (uploadImagePreview.getAttribute("src") == "") {
+      alert("Không thể thực hiện chức năng này do chưa có ảnh được chọn!");
+    } else {
+      uploadImageInput.value = "";
+      uploadImagePreview.setAttribute("src", "");
+    }
+  });
+}
+// End Clear Image Preview

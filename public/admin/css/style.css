@@ -69,3 +69,16 @@ header .inner-logo a {
   cursor: pointer;
   margin-left: 5px;
 }
+/* Upload Preview */
+.image-preview {
+  width: 150px;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+.image-preview[src=""] {
+  display: none;
+}
