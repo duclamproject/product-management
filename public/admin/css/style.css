@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 .header {
   background: #202020;
   padding: 10px 0;
@@ -76,8 +81,10 @@ header .inner-logo a {
   object-fit: cover;
   display: block;
   border: 1px solid black;
+  padding: 15px;
   border-radius: 10px;
   margin-top: 15px;
+
   mix-blend-mode: multiply;
 }
 .image-preview[src=""] {

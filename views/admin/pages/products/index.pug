@@ -85,8 +85,11 @@ block main
                                         class = "badge badge-danger"
                                         ) Dừng hoạt động
                                 td 
-                                    button(class = "btn btn-warning btn-sm") Sửa
-                                    button(class = "btn btn-danger btn-sm ml-1" button-delete data-id=item.id) Xóa
+                                    a(
+                                        href=`${prefixAdmin}/products/edit/${item.id}`
+                                        class = "btn btn-warning btn-sm"
+                                    ) Sửa
+                                    a(class = "btn btn-danger btn-sm ml-1" button-delete data-id=item.id) Xóa
     +pagination(pagination)
 
     form(
