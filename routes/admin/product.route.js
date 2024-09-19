@@ -1,4 +1,5 @@
 const express = require("express");
+const validates = require("../../validates/admin/products.validate");
 const router = express.Router();
 const controller = require("../../controllers/admin/product.controller");
 const multer = require("multer");
@@ -9,5 +10,10 @@ router.patch("/change-status/:status/:id", controller.changeStatus);
 router.patch("/change-multi/", controller.changeMulti);
 router.delete("/delete-item/:id", controller.deleteItem);
 router.get("/create", controller.create);
-router.post("/create", upload.single("thumbnail"), controller.createPost);
+router.post(
+  "/create",
+  upload.single("thumbnail"),
+  validates.createPost,
+  controller.createPost
+);
 module.exports = router;
