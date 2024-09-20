@@ -4,6 +4,7 @@ const Product = require("../../models/product.model");
 module.exports.index = async (req, res) => {
   const products = await Product.find({
     deleted: false,
+    status: "active",
   }).sort({ position: "desc" });
   const newProduct = products.map((item) => {
     item.priceNew = (
@@ -17,5 +18,20 @@ module.exports.index = async (req, res) => {
   res.render("client/pages/products/index", {
     pageTitle: "Trang danh sách sản phẩm",
     products: newProduct,
+  });
+};
+
+module.exports.detail = async (req, res) => {
+  const find = {
+    deleted: false,
+    slug: req.params.slug,
+    status: "active",
+  };
+  const product = await Product.findOne(find);
+  console.log(product);
+
+  res.render("client/pages/products/detail", {
+    pageTitle: product.title,
+    product: product,
   });
 };
