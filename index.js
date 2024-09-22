@@ -18,9 +18,9 @@ const database = require("./config/database");
 database.connect();
 
 // public folder
-app.use(express.static("public"));
+app.use(express.static(`${__dirname}/public`));
 // PugJS
-app.set("views", "./views");
+app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 // Express Flash
 app.use(cookieParser("JKJKJKFHJK"));
