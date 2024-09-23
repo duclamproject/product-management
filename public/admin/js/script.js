@@ -171,3 +171,48 @@ if (clearImagePreview) {
   });
 }
 // End Clear Image Preview
+
+// Sort
+const sort = document.querySelector("[sort]");
+if (sort) {
+  const sortSelect = document.querySelector("[sort-select]");
+  sortSelect.addEventListener("change", (e) => {
+    const url = new URL(window.location.href);
+    // console.log(sortSelect.value);
+    const [sortKey, sortValue] = sortSelect.value.split("-");
+    // console.log(sortKey);
+    // console.log(sortValue);
+    if (sortKey && sortValue) {
+      url.searchParams.set("sortKey", sortKey);
+      url.searchParams.set("sortValue", sortValue);
+    } else {
+      url.searchParams.delete("sortKey");
+      url.searchParams.delete("sortValue");
+    }
+    window.location.href = url.href;
+  });
+  const sortClear = document.querySelector("[sort-clear]");
+  if (sortClear) {
+    sortClear.addEventListener("click", () => {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("sortKey");
+      url.searchParams.delete("sortValue");
+      window.location.href = url.href;
+    });
+  }
+}
+// Thêm selected cho option
+const url = new URL(window.location.href);
+const sortKey = url.searchParams.get("sortKey");
+const sortValue = url.searchParams.get("sortValue");
+const compareValue = `${sortKey}-${sortValue}`;
+console.log(compareValue);
+const options = document.querySelectorAll("[sort-select] option");
+if (options) {
+  options.forEach((option) => {
+    if (compareValue == option.value) {
+      option.setAttribute("selected", "true");
+    }
+  });
+}
+// End Sort
