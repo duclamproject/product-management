@@ -8,16 +8,21 @@ include ../../mixins/sort.pug
 
 block main  
     h1 Danh mục sản phẩm
+    //- Tự làm bộ lọc + tìm kiếm
     .card.mb-3
         .card-header Bộ lọc và Tìm kiếm
         .card-body
             .row
                 .col-6
-                    //- h1 Bộ lọc
-                    //- +filter-status(filterStatus)
+                    each item in filterStatus 
+                        button(
+                            class=`btn btn-sm ml-1 btn-outline-success ${item.class}`
+                            button-status=item.status
+                        ) #{item.name}
                 .col-6
                     //- h1 Tìm kiếm
                     //- +search(keyword)
+    //- Kết thúc tự làm bộ lọc + tìm kiếm
     .card.mb-3
         .card-header Danh sách
             .card-body
