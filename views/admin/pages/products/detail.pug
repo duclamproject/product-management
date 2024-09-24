@@ -32,7 +32,7 @@ block main
             div(class="mb-4") Vi tri: <b>#{product.position}</b>
 
     if (product.description)
-        div(class="mb-4") #{product.description}
+        div(class="mb-4") !{product.description}
     a(
         class="btn btn-warning"
         href=`${prefixAdmin}/products/edit/${product.id}`
