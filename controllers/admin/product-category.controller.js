@@ -1,49 +1,34 @@
 const ProductCategory = require("../../models/product-category.model");
 const systemConfig = require("../../config/system");
+const filterStatusHelper = require("../../helpers/filterStatus");
 module.exports.index = async (req, res) => {
   const find = {
     deleted: false,
   };
   // Filter Status
-  const filterStatus = [
-    {
-      name: "Tất cả",
-      status: "",
-      class: "",
-    },
-    {
-      name: "Hoạt động",
-      status: "active",
-      class: "",
-    },
-    {
-      name: "Dừng hoạt động",
-      status: "inactive",
-      class: "",
-    },
-  ];
-  if (req.query.status) {
-    const index = filterStatus.findIndex((item) => {
-      return item.status == req.query.status;
-    });
-    filterStatus[index].class = "active";
-  } else {
-    const index = filterStatus.findIndex((item) => {
-      return item.status == "";
-    });
-    filterStatus[index].class = "active";
-  }
+  const filterStatus = filterStatusHelper(req.query);
 
   if (req.query.status) {
     find.status = req.query.status;
   }
   // End Filter Status
+  // Search
+  const objectSearch = {
+    keyword: "",
+  };
+  if (req.query.keyword) {
+    objectSearch.keyword = req.query.keyword;
+    objectSearch.regex = new RegExp(objectSearch.keyword, "i");
+    find.title = objectSearch.regex;
+  }
+  // End Search
 
   const record = await ProductCategory.find(find).sort({ position: "desc" });
   res.render("admin/pages/products-category/index.pug", {
     pageTitle: "Danh mục sản phẩm",
     record: record,
     filterStatus: filterStatus,
+    keyword: objectSearch.keyword,
   });
 };
 module.exports.create = (req, res) => {
