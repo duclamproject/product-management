@@ -1,6 +1,7 @@
 const ProductCategory = require("../../models/product-category.model");
 const systemConfig = require("../../config/system");
 const filterStatusHelper = require("../../helpers/filterStatus");
+const createTreeHelper = require("../../helpers/createTree");
 module.exports.index = async (req, res) => {
   const find = {
     deleted: false,
@@ -23,17 +24,65 @@ module.exports.index = async (req, res) => {
   }
   // End Search
 
-  const record = await ProductCategory.find(find).sort({ position: "desc" });
+  // Sort
+  const sort = {};
+  if (req.query.sortKey && req.query.sortValue) {
+    sort[req.query.sortKey] = req.query.sortValue;
+  } else {
+    sort.position = "desc";
+  }
+  // End Sort
+  const record = await ProductCategory.find(find).sort(sort);
+  const newRecords = createTreeHelper.tree(record);
+  console.log(newRecords);
+
   res.render("admin/pages/products-category/index.pug", {
     pageTitle: "Danh mục sản phẩm",
-    record: record,
+    record: newRecords,
     filterStatus: filterStatus,
     keyword: objectSearch.keyword,
   });
 };
-module.exports.create = (req, res) => {
+module.exports.create = async (req, res) => {
+  const find = {
+    deleted: false,
+  };
+  // Code mẫu
+  // function createTree(arr, parentId = "") {
+  //   const tree = [];
+  //   arr.forEach((item) => {
+  //     if (item.parent_id === parentId) {
+  //       const newItem = item;
+  //       const children = createTree(arr, item.id);
+  //       if (children.length > 0) {
+  //         newItem.children = children;
+  //       }
+  //       tree.push(newItem);
+  //     }
+  //   });
+  //   return tree;
+  // }
+
+  // Tự ngẫm
+  // function createTree(arr, parentID = "") {
+  //   const tree = [];
+  //   arr.forEach((item) => {
+  //     if (item.parent_id === parentID) {
+  //       const newBranch = item;
+  //       const children = createTree(arr, item.id);
+  //       if (children.length > 0) {
+  //         newBranch.children = children;
+  //       }
+  //       tree.push(newBranch);
+  //     }
+  //   });
+  //   return tree;
+  // }
+  const records = await ProductCategory.find(find);
+  const newRecords = createTreeHelper.tree(records);
   res.render("admin/pages/products-category/create.pug", {
     pageTitle: "Tạo mới danh mục",
+    records: newRecords,
   });
 };
 module.exports.createPost = async (req, res) => {
