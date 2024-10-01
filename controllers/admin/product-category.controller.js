@@ -119,7 +119,7 @@ module.exports.edit = async (req, res) => {
       records: newRecords,
     });
   } catch (error) {
-    res.redirect(`/admin/products-category`);
+    res.redirect(`${systemConfig.prefixAdmin}/products-category`);
   }
 };
 // EDIT PATCH
