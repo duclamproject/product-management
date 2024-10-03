@@ -17,9 +17,28 @@ module.exports.create = async (req, res) => {
   });
 };
 module.exports.createPost = async (req, res) => {
-  console.log(req.body);
   const record = await new Role(req.body);
   await record.save();
   req.flash("success", "Tạo mới nhóm quyền thành công!");
   res.redirect(`${systemConfig.prefixAdmin}/roles`);
+};
+
+module.exports.edit = async (req, res) => {
+  const id = req.params.id;
+  const find = {
+    deleted: false,
+    _id: id,
+  };
+  const data = await Role.findOne(find);
+  res.render("admin/pages/roles/edit", {
+    pageTitle: "Sửa nhóm quyền",
+    data: data,
+  });
+};
+module.exports.editPatch = async (req, res) => {
+  const id = req.params.id;
+
+  await Role.updateOne({ _id: id }, req.body);
+  req.flash("success", "Cập nhập nhóm quyền thành công");
+  res.redirect("back");
 };
