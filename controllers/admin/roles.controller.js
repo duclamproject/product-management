@@ -42,3 +42,32 @@ module.exports.editPatch = async (req, res) => {
   req.flash("success", "Cập nhập nhóm quyền thành công");
   res.redirect("back");
 };
+
+// premissions
+module.exports.premissions = async (req, res) => {
+  let find = {
+    deleted: false,
+  };
+  const record = await Role.find(find);
+  res.render("admin/pages/roles/permissions", {
+    pageTitle: "Phân quyền",
+    record: record,
+  });
+};
+// Permission Patch
+module.exports.premissionsPatch = async (req, res) => {
+  try {
+    const permission = JSON.parse(req.body.permission);
+    for (const element of permission) {
+      await Role.updateOne(
+        { _id: element.id },
+        { permissions: element.permission }
+      );
+    }
+    req.flash("success", "Cập nhập phân quyền thành công!");
+    res.redirect("back");
+  } catch (error) {
+    req.flash("error", "Cập nhập phân quyền thất bại!");
+    res.redirect("back");
+  }
+};
