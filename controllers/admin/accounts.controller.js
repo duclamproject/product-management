@@ -2,9 +2,6 @@ const md5 = require("md5");
 const Account = require("../../models/account.model");
 const Role = require("../../models/roles.model");
 const systemConfig = require("../../config/system");
-const multer = require("multer");
-const upload = multer();
-const uploadCloud = require("../../middlewares/admin/uploadCloud.middleware");
 module.exports.index = async (req, res) => {
   const find = {
     deleted: false,
