@@ -3,6 +3,14 @@ const md5 = require("md5");
 const Accounts = require("../../models/account.model");
 // [GET] admin/auth/login
 module.exports.login = async (req, res) => {
+  if (req.cookies.token) {
+    const user = await Accounts.findOne({
+      token: req.cookies.token,
+    });
+    if (user) {
+      res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
+    }
+  }
   res.render("admin/pages/auth/login.pug", {
     pageTitle: "Trang đăng nhập",
   });
