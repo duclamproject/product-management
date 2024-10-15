@@ -1,31 +1,34 @@
 extends ../../layouts/default.pug
 include ../../mixins/alert.pug
 block main 
-    +alert-success(5000)
-    h1(class="mb-4") Thêm mới nhóm quyền
-    form(
-        action=`${prefixAdmin}/roles/create`
-        method="POST"
-    )
-        div(class="form-group")
-            label(for="title") Tiêu đề
-            input(
-                type="text"
-                class="form-control"
-                id="title"
-                name="title"
-                required
-            )
-        div(class="form-group")
-            label(for="desc") Mô tả
-            input(
-                type="text"
-                class="form-control"
-                id="desc"
-                name="description"
-            )
-        div(class="form-group")
-            button(
-                type="submit" 
-                class = "btn btn-primary"
-            ) Tạo mới
+    if(role.permissions.includes("roles_create"))
+        +alert-success(5000)
+        h1(class="mb-4") Thêm mới nhóm quyền
+        form(
+            action=`${prefixAdmin}/roles/create`
+            method="POST"
+        )
+            div(class="form-group")
+                label(for="title") Tiêu đề
+                input(
+                    type="text"
+                    class="form-control"
+                    id="title"
+                    name="title"
+                    required
+                )
+            div(class="form-group")
+                label(for="desc") Mô tả
+                input(
+                    type="text"
+                    class="form-control"
+                    id="desc"
+                    name="description"
+                )
+            div(class="form-group")
+                button(
+                    type="submit" 
+                    class = "btn btn-primary"
+                ) Tạo mới
+    else 
+        h1(class="mb-4") Bạn không có quyền truy cập!
