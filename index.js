@@ -5,7 +5,7 @@ const express = require("express");
 const path = require("path");
 const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
-
+const moment = require("moment");
 // .env
 require("dotenv").config();
 const app = express();
@@ -42,6 +42,7 @@ routeAdmin(app);
 // App Local Variables
 const systemConfig = require("./config/system");
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+app.locals.moment = moment;
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
