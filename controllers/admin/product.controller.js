@@ -50,11 +50,22 @@ module.exports.index = async (req, res) => {
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip);
   for (const product of products) {
+    // Lấy ra thông tin người tạo
     const user = await Account.findOne({
       _id: product.createdBy.account_id,
     });
     if (user) {
-      product.accountFullName = user.fullName;
+      product.accountFullNameCreated = user.fullName;
+    }
+    // Lấy ra thông tin người cập nhật gần nhất
+    const updatedBy = product.updatedBy[product.updatedBy.length - 1];
+    if (updatedBy) {
+      const userUpdated = await Account.findOne({
+        _id: updatedBy.account_id,
+      });
+      if (userUpdated) {
+        product.accountFullNameUpdated = userUpdated.fullName;
+      }
     }
   }
   res.render("admin/pages/products/index", {
@@ -70,7 +81,14 @@ module.exports.changeStatus = async (req, res) => {
   // console.log(req.params);
   const status = req.params.status;
   const id = req.params.id;
-  await Product.updateOne({ _id: id }, { status: status });
+  const updatedBy = {
+    account_id: res.locals.user.id,
+    updatedAt: new Date(),
+  };
+  await Product.updateOne(
+    { _id: id },
+    { status: status, $push: { updatedBy: updatedBy } }
+  );
   req.flash("success", "Cập nhập trạng thái sản phẩm thành công!");
   res.redirect("back");
 };
@@ -106,7 +124,10 @@ module.exports.changeMulti = async (req, res) => {
         { _id: { $in: ids } },
         {
           deleted: true,
-          deletedAt: new Date(),
+          deletedBy: {
+            account_id: res.locals.user.id,
+            deletedAt: new Date(),
+          },
         }
       );
       req.flash("success", `Đã xóa thành công ${ids.length} sản phẩm!`);
@@ -126,11 +147,17 @@ module.exports.changeMulti = async (req, res) => {
 
 module.exports.deleteItem = async (req, res) => {
   const idDel = req.params.id;
-
   await Product.updateOne(
     { _id: idDel },
-    { deleted: true, deletedAt: new Date() }
+    {
+      deleted: true,
+      deletedBy: {
+        account_id: res.locals.user.id,
+        deletedAt: new Date(),
+      },
+    }
   );
+  req.flash("success", "Xóa thành công sản phẩm!");
   res.redirect("back");
 };
 
@@ -199,7 +226,17 @@ module.exports.editPatch = async (req, res) => {
     req.body.thumbnail = `/upload/${req.file.filename}`;
   }
   try {
-    await Product.updateOne({ _id: id }, req.body);
+    const updatedBy = {
+      account_id: res.locals.user.id,
+      updatedAt: new Date(),
+    };
+    await Product.updateOne(
+      { _id: id },
+      {
+        ...req.body,
+        $push: { updatedBy: updatedBy },
+      }
+    );
     req.flash("success", "Chỉnh sửa sản phẩm thành công!");
   } catch (error) {
     req.flash("error", "Chỉnh sửa sản phẩm thất bại!");

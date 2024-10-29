@@ -2,7 +2,7 @@ mixin table-tree(items, level = 1)
     each item, index in items
         - const prefix = Array(level + 1).join(" -- ")
         tr 
-            td  
+            td
                 input(
                     type="checkbox" 
                     name="id"
@@ -52,7 +52,7 @@ mixin table-tree(items, level = 1)
                         href=`${prefixAdmin}/products-category/edit/${item.id}`
                         class = "btn btn-warning btn-sm"
                     ) Sửa
-                if(role.permissions.includes("products-category_delete "))
+                if(role.permissions.includes("products-category_delete"))
                     a(class = "btn btn-danger btn-sm ml-1" button-delete data-id=item.id) Xóa
         if(item.children && item.children.length > 0)
             +table-tree(item.children, level + 1)

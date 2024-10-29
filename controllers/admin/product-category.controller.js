@@ -34,7 +34,7 @@ module.exports.index = async (req, res) => {
   // End Sort
   const record = await ProductCategory.find(find).sort(sort);
   const newRecords = createTreeHelper.tree(record);
-  console.log(newRecords);
+  // console.log(newRecords);
 
   res.render("admin/pages/products-category/index.pug", {
     pageTitle: "Danh mục sản phẩm",

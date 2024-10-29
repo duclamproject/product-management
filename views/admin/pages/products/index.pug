@@ -49,6 +49,7 @@ block main
                                 if(role.permissions.includes("products_edit"))
                                     th Trạng thái 
                                 th Người tạo
+                                th Người cập nhật
                                 th Hành động
                         tbody 
                             each item, index in products
@@ -94,9 +95,13 @@ block main
                                                 class = "badge badge-danger"
                                                 ) Dừng hoạt động
                                     td 
-                                        p #{item.accountFullName}
+                                        p #{item.accountFullNameCreated}
                                         if(item.createdBy.createdAt)
                                             +formatDateTime(item.createdBy.createdAt)
+                                    td 
+                                        p #{item.accountFullNameUpdated}
+                                        if(item.updatedBy.updatedAt)
+                                            +formatDateTime(item.updatedBy.updatedAt)
                                     td 
                                         a(
                                             href=`${prefixAdmin}/products/detail/${item.id}`
