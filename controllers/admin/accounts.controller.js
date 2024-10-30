@@ -92,3 +92,20 @@ module.exports.editPatch = async (req, res) => {
   }
   res.redirect(`back`);
 };
+
+module.exports.detail = async (req, res) => {
+  const find = {
+    _id: req.params.id,
+    deleted: false,
+  };
+  const record = await Account.findOne(find).select("-password -token");
+  const record_role = await Role.findOne({
+    _id: record.role_id,
+    deleted: false,
+  });
+  res.render("admin/pages/accounts/detail.pug", {
+    pageTitle: record.fullName,
+    record: record,
+    record_role: record_role,
+  });
+};

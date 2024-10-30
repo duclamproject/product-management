@@ -1,0 +1,32 @@
+extends ../../layouts/default.pug
+include ../../mixins/moment.pug
+block main 
+    if (record.avatar)
+        img(src=record.avatar width="150px" class="mb-3")
+    if (record.fullName)
+        h1(class="mb-4") #{record.fullName}
+    if (record.email)
+        div(class="mb-4") Email: <b>#{record.email}</b>
+    if (record.phone)
+        div(class="mb-4") Phone number: <b>#{record.phone}</b>
+    if (record.role_id)
+        div(class="mb-4 d-flex flex-column") 
+            span Quyền truy cập: 
+                b #{record_role.title}
+    if (record.createdAt)
+        div(class="mb-4") Created At: 
+            b 
+                +formatDateTime(record.createdAt)
+    if (record.status)
+        div(
+            class="mb-4" style="margin-right: 10px"
+        )
+            span Trạng thái:    
+            if (record.status === "active")
+                span(class="badge badge-success") Hoạt động
+            else
+                span(class="badge badge-danger") Dừng hoạt động
+    a(
+        class="btn btn-warning"
+        href=`${prefixAdmin}/my-account/edit`
+    ) Chỉnh sửa
