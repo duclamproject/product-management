@@ -7,7 +7,7 @@
   max-height: 50px;
   max-width: 100%;
 }
-.header .inner-menu ul {
+.header .inner-menu .ul-nav {
   display: flex;
   list-style: none;
   align-items: center;
@@ -70,3 +70,40 @@
   background-color: red;
   color: white;
 }
+
+/* Submenu */
+.sub-menu {
+  position: relative;
+  z-index: 999;
+}
+.sub-menu ul {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: #eae9e9;
+  min-width: 180px;
+  display: none;
+}
+.sub-menu ul li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+.sub-menu:hover > ul {
+  display: block;
+}
+
+.sub-menu ul li {
+  position: relative;
+}
+.sub-menu ul li ul {
+  right: 100%;
+  top: 0;
+}
+
+.sub-menu ul li:hover > ul {
+  display: block;
+}
+/* End submenu */
