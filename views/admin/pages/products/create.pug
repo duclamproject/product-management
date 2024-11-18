@@ -21,6 +21,25 @@ block main
                 name="title"
                 required
                 )
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="form-check-input"
+                    id="featured1"
+                    name="featured"
+                    value="1"
+                )
+                label(for="featured1" class="form-check-label") Nổi bật
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="form-check-input"
+                    id="featured0"
+                    name="featured"
+                    value="0"
+                    checked
+                )
+                label(for="featurede" class="form-check-label") Không
             div(class="form-group")
                 label(for="product_category_id") Danh mục cha
                 select(
