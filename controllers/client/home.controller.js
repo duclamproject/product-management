@@ -10,9 +10,20 @@ module.exports.index = async (req, res) => {
   const productsFeatured = await Products.find(find)
     .sort({ price: "desc" })
     .limit(8);
-  const newProducts = productsHelper.priceNewProducts(productsFeatured);
+  const newProductsFeatured = productsHelper.priceNewProducts(productsFeatured);
+
+  // Hiển thị ra sản phẩm mới nhất
+  const productsNew = await Products.find({
+    deleted: false,
+    status: "active",
+    // featured: { $ne: "1" },
+  })
+    .limit(8)
+    .sort({ position: "desc" });
+  // End: Hiển thị ra sản phẩm mới nhất
   res.render("client/pages/home/index", {
     pageTitle: "Trang chủ",
-    productsFeatured: newProducts,
+    productsFeatured: newProductsFeatured,
+    productsNew: productsNew,
   });
 };
