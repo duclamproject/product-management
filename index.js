@@ -34,8 +34,8 @@ app.use(
   express.static(path.join(__dirname, "node_modules", "tinymce"))
 );
 // Routes
-const route = require("./routes/client/index.route");
-route(app);
+const routeClient = require("./routes/client/index.route");
+routeClient(app);
 // Route Admin
 const routeAdmin = require("./routes/admin/index.route");
 routeAdmin(app);
