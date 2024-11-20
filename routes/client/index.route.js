@@ -4,5 +4,6 @@ const middleware = require("../../middlewares/client/category.middleware");
 module.exports = (app) => {
   app.use(middleware.category);
   app.use("/", homeRoutes);
-  app.use("/products", productRoutes);
+  app.use("/products/", productRoutes);
+  app.use("/products/products/", productRoutes);
 };

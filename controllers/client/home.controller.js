@@ -20,10 +20,11 @@ module.exports.index = async (req, res) => {
   })
     .limit(8)
     .sort({ position: "desc" });
+  const newProductsNew = productsHelper.priceNewProducts(productsNew);
   // End: Hiển thị ra sản phẩm mới nhất
   res.render("client/pages/home/index", {
     pageTitle: "Trang chủ",
     productsFeatured: newProductsFeatured,
-    productsNew: productsNew,
+    productsNew: newProductsNew,
   });
 };

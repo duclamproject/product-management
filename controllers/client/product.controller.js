@@ -19,12 +19,19 @@ module.exports.index = async (req, res) => {
 module.exports.detail = async (req, res) => {
   const find = {
     deleted: false,
-    slug: req.params.slug,
+    slug: req.params.slugProduct,
     status: "active",
   };
   const product = await Product.findOne(find);
-  // console.log(product);
-
+  if (product.product_category_id) {
+    const category = await ProductCategory.findOne({
+      _id: product.product_category_id,
+      status: "active",
+      deleted: false,
+    });
+    product.category = category;
+  }
+  product.priceNew = productsHelper.priceNewProduct(product);
   res.render("client/pages/products/detail", {
     pageTitle: product.title,
     product: product,
@@ -49,6 +56,7 @@ module.exports.category = async (req, res) => {
       $in: [categoryRecord.id, ...listSubCategoryId],
     },
     deleted: false,
+    status: "active",
   }).sort({ position: "desc" });
 
   const newProducts = productsHelper.priceNewProducts(products);
