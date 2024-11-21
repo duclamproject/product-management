@@ -172,3 +172,38 @@
 }
 
 /* End Product-detail */
+
+/* Show Alert */
+/* Show Alert */
+[show-alert] {
+  position: fixed;
+  right: 15px;
+  top: 70px;
+  width: max-content;
+  z-index: 999;
+}
+[show-alert].alert-hidden {
+  animation: alert-hidden 0.5s both;
+}
+@keyframes alert-hidden {
+  from {
+    right: 15px;
+  }
+  to {
+    right: -100%;
+    display: none;
+  }
+}
+[show-alert] [close-alert] {
+  background: white;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  font-weight: 600;
+  border-radius: 100%;
+  cursor: pointer;
+  margin-left: 5px;
+}
+/* End Show Alert */
