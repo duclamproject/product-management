@@ -12,3 +12,14 @@ if (showAlert) {
   });
 }
 // End Show Alert
+
+// Go back
+const buttonsGoBack = document.querySelectorAll("[button-go-back]");
+if (buttonsGoBack.length > 0) {
+  buttonsGoBack.forEach((button) => {
+    button.addEventListener("click", () => {
+      history.back();
+    });
+  });
+}
+// End Go back

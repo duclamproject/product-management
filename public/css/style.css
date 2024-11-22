@@ -207,3 +207,9 @@
   margin-left: 5px;
 }
 /* End Show Alert */
+
+/* Go back */
+[button-go-back] {
+  margin-bottom: 50px;
+}
+/* End Go back */
