@@ -58,8 +58,6 @@ module.exports.order = async (req, res) => {
   const order = new Order(objectOrder);
   await order.save();
   await Cart.updateOne({ _id: cartId }, { products: [] });
-
-  req.flash("success", "Thanh toán thành công!");
   res.redirect(`/checkout/success/${order.id}`);
 };
 
