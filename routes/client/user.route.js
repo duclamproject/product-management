@@ -6,4 +6,5 @@ route.get("/register", controller.register);
 route.post("/register", validate.userRegister, controller.registerPost);
 route.get("/login", controller.login);
 route.post("/login", validate.loginPost, controller.loginPost);
+route.get("/logout", controller.logout);
 module.exports = route;
