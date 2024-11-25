@@ -1,5 +1,8 @@
 const User = require("../../models/user.model");
+const ForgotPassword = require("../../models/forgot-password.model");
+const generateHelper = require("../../helpers/generate");
 const md5 = require("md5");
+
 module.exports.register = async (req, res) => {
   res.render("client/pages/user/register.pug", {
     pageTitle: "Đăng ký tài khoản",
@@ -61,4 +64,63 @@ module.exports.logout = async (req, res) => {
   res.clearCookie("tokenUser");
   req.flash("success", "Đăng xuất thành công!");
   res.redirect("/");
+};
+
+module.exports.forgotPassword = async (req, res) => {
+  res.render("client/pages/user/forgot-password", {
+    pageTitle: "Quên mật khẩu",
+  });
+};
+
+module.exports.forgotPasswordPost = async (req, res) => {
+  const email = req.body.email;
+  const exitsEmail = await User.findOne({
+    email: email,
+    deleted: false,
+  });
+  if (!exitsEmail) {
+    req.flash("error", `Không tồn tại email ${email}`);
+    res.redirect("back");
+    return;
+  }
+  // Việc 1: Tạo OTP và lưu vào collection forgot-password
+  const otp = generateHelper.generateRandomNumber(8);
+  const objectForgotPassword = {
+    email: email,
+    otp: otp,
+    expireAt: Date.now(),
+  };
+
+  const forgotPassword = new ForgotPassword(objectForgotPassword);
+  await forgotPassword.save();
+
+  // Việc 2: Gửi mã OTP qua email của user
+  res.redirect(`/user/password/otp?email=${email}`);
+};
+
+module.exports.otpPassword = async (req, res) => {
+  const email = req.query.email;
+  res.render("client/pages/user/otp-password", {
+    pageTitle: "Nhập mã OTP",
+    email: email,
+  });
+};
+
+module.exports.otpPasswordPost = async (req, res) => {
+  const email = req.body.email;
+  const otp = req.body.otp;
+  const result = await ForgotPassword.findOne({
+    email: email,
+    otp: otp,
+  });
+  if (!result) {
+    req.flash("error", "OTP không hợp lệ!");
+    res.redirect("back");
+    return;
+  }
+  const user = await User.findOne({
+    email: email,
+  });
+  res.cookie("tokenUser", user.tokenUser);
+  res.redirect("/user/password/reset");
 };
