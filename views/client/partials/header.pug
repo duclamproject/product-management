@@ -6,7 +6,7 @@ header.header
                 .inner-logo 
                     a(href="/") 
                         img(src="/images/online-shop.png", alt="logo")
-            .col-5 
+            .col-4 
                 form(
                     action="/search"
                     method="GET"
@@ -23,7 +23,7 @@ header.header
                             type="submit"
                             class="btn btn-primary"
                         ) Tìm
-            .col-5
+            .col-6
                 .inner-menu 
                     ul(class ="ul-nav")
                         li 
@@ -35,6 +35,8 @@ header.header
                         li(class="cart")
                             a(href="/cart") Giỏ hàng (#{miniCart ? miniCart.totalQuantity : "0"}) 
                         if(user)
+                            li 
+                                a(href="/user/infor") #{user.fullName} 
                             li 
                                 a(href="/user/logout") Đăng xuất 
                         else

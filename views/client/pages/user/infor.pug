@@ -1,0 +1,19 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+block main  
+    .container.my-3
+        .row
+            .col-12
+                +box-head("Thông tin tài khoản")
+        div(class="mb-4 d-flex")
+            span Họ và tên: 
+                b #{user.fullName}
+        div(class="mb-4 d-flex")
+            span Email: 
+                b #{user.email}
+        div(class="mb-4 d-flex")
+            span Trạng thái tài khoản: 
+                if(user.status == "active")
+                    span(class="badge badge-success p-3") Hoạt động
+                else 
+                    span(class="badge badge-danger") Tài khoản bị dừng hoạt động
