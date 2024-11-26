@@ -1,5 +1,6 @@
 const User = require("../../models/user.model");
 const ForgotPassword = require("../../models/forgot-password.model");
+const Cart = require("../../models/cart.model");
 const generateHelper = require("../../helpers/generate");
 const sendMailHelper = require("../../helpers/sendMail");
 const md5 = require("md5");
@@ -56,7 +57,17 @@ module.exports.loginPost = async (req, res) => {
     res.redirect("back");
     return;
   }
+
   res.cookie("tokenUser", user.tokenUser);
+  // Lưu user_id vào collection carts
+  await Cart.updateOne(
+    {
+      _id: req.cookies.cartId,
+    },
+    {
+      user_id: user.id,
+    }
+  );
   req.flash("success", "Đăng nhập thành công!");
   res.redirect("/");
 };
