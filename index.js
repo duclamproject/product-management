@@ -43,6 +43,12 @@ routeAdmin(app);
 const systemConfig = require("./config/system");
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 app.locals.moment = moment;
+// 404 Not Found
+app.get("*", (req, res) => {
+  res.render("client/pages/error/404.pug", {
+    pageTitle: "404 Not Found",
+  });
+});
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
