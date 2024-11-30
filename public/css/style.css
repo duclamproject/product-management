@@ -285,3 +285,23 @@
   border-bottom-right-radius: 15px;
 }
 /* End Chat */
+
+/* Emoji Picker */
+.tooltip {
+  visibility: hidden;
+}
+.tooltip.shown {
+  visibility: visible;
+  opacity: 1;
+}
+.button-icon {
+  font-size: 20px;
+  padding: 0px 10px;
+}
+.button-icon:hover {
+  background-color: black;
+  cursor: pointer;
+  color: white;
+  border-radius: 10px;
+}
+/* End Emoji Picker */
