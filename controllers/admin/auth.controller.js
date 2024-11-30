@@ -9,6 +9,7 @@ module.exports.login = async (req, res) => {
     });
     if (user) {
       res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
+      return;
     }
   }
   res.render("admin/pages/auth/login.pug", {
