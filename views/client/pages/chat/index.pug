@@ -8,16 +8,13 @@ block main
         .row
             .col-12
                 .chat(my-id=user.id)
-                    //- .inner-head
-                    //- .inner-avatar EY
-                    //- .inner-name Em Yeu
                     .inner-body
                         each chat in chats
-                            div(class=(chat.inforUser.id == user.id  ) ? "inner-outgoing" : "inner-incoming")
-                                if(chat.inforUser.id != user.id )
+                            div(class=(chat.inforUser.id == user.id) ? "inner-outgoing" : "inner-incoming")
+                                if(chat.inforUser.id != user.id)
                                     .inner-name #{chat.inforUser.fullName}
                                 .inner-content #{chat.content}
-                        
+                        div(class="inner-list-typing")
                     .inner-foot
                         form(
                             class="inner-form"
@@ -33,5 +30,5 @@ block main
                             button
                                 i(class="fa-solid fa-paper-plane")
         div(class="tooltip" role="tooltip")
-            emoji-picker
+            emoji-picker(class="light")
 
