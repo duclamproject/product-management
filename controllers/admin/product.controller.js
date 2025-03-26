@@ -222,9 +222,6 @@ module.exports.editPatch = async (req, res) => {
   } else {
     req.body.position = parseInt(req.body.position);
   }
-  if (req.file) {
-    req.body.thumbnail = `/upload/${req.file.filename}`;
-  }
   try {
     const updatedBy = {
       account_id: res.locals.user.id,

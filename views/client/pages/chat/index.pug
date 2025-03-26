@@ -13,7 +13,12 @@ block main
                             div(class=(chat.inforUser.id == user.id) ? "inner-outgoing" : "inner-incoming")
                                 if(chat.inforUser.id != user.id)
                                     .inner-name #{chat.inforUser.fullName}
-                                .inner-content #{chat.content}
+                                if(chat.content)
+                                    .inner-content #{chat.content}
+                                if(chat.images)
+                                    .inner-images
+                                        each image in chat.images 
+                                            img(src = image, alt="Đã gửi ảnh")
                         div(class="inner-list-typing")
                     .inner-foot
                         form(
@@ -25,10 +30,14 @@ block main
                                 placeholder="Nhập nội dung ..."
                                 name="content"
                             )
+                            //- File upload with preview
+                            div(class="custom-file-container" data-upload-id="upload-image")
+                            
                             span(class="button-icon mx-2") 
                                 i(class="fa-regular fa-face-smile")
                             button
                                 i(class="fa-solid fa-paper-plane")
-        div(class="tooltip" role="tooltip")
-            emoji-picker(class="light")
-
+    div(class="tooltip" role="tooltip")
+        emoji-picker(class="light")
+    
+    
