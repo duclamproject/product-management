@@ -158,3 +158,10 @@ if (elementListTyping) {
   });
 }
 // End SERVER_RETURN_TYPING
+
+// Preview Image
+const chatBody = document.querySelector(".chat .inner-body");
+if (chatBody) {
+  const gallery = new Viewer(chatBody);
+}
+// End Preview Image
