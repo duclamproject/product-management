@@ -29,6 +29,7 @@ block main
                             input(
                                 type="text"
                                 placeholder="Nhập nội dung ..."
+                                autocomplete="off"
                                 name="content"
                             )
                             //- File upload with preview
@@ -40,5 +41,5 @@ block main
                                 i(class="fa-solid fa-paper-plane")
     div(class="tooltip" role="tooltip")
         emoji-picker(class="light")
-    
-    
+    block script 
+        script(type="module" src="/js/chat.js")
