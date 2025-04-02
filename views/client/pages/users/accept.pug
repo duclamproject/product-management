@@ -31,5 +31,10 @@ block main
                                     btn-deleted-friend
                                     disabled
                                 ) Đã xóa
+                                 button(
+                                    class="btn btn-sm btn-primary mr-1"
+                                    btn-accepted-friend=user.id
+                                    disabled
+                                ) Đã chấp nhận
     block script 
         script(src="/js/users.js")

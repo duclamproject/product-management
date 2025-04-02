@@ -74,6 +74,7 @@ module.exports = async (res) => {
         );
       }
     });
+
     // Người dùng từ chối yêu cầu kết bạn
     socket.on("CLIENT_REFUSE_FRIEND", async (userId) => {
       const myUserId = res.locals.user.id;
@@ -106,6 +107,57 @@ module.exports = async (res) => {
         await User.updateOne(
           { _id: userId },
           {
+            $pull: { requestFriends: myUserId },
+          }
+        );
+      }
+    });
+
+    // Người dùng chấp nhận yêu cầu kết bạn
+    socket.on("CLIENT_ACCEPT_FRIEND", async (userId) => {
+      const myUserId = res.locals.user.id;
+
+      // console.log(myUserId); // ID của B
+      // console.log(userId); // ID của A
+
+      // Thêm {user_id, room_chat_id} của A vào friendsList của B - Xóa id của A trong acceptFriends của B
+      const exisUserAInB = await User.findOne({
+        _id: myUserId,
+        acceptFriends: userId,
+      });
+
+      // console.log(exisUserAInB); // Là select tất cả của A
+      if (exisUserAInB) {
+        await User.updateOne(
+          { _id: myUserId },
+          {
+            $push: {
+              friendList: {
+                user_id: userId,
+                room_chat_id: "",
+              },
+            },
+
+            $pull: { acceptFriends: userId },
+          }
+        );
+      }
+
+      //Thêm {user_id, room_chat_id} của B vào friendsList của A - Xóa id của B trong requestFriends của A
+      const exisUserBInA = await User.findOne({
+        _id: userId,
+        requestFriends: myUserId,
+      });
+      if (exisUserBInA) {
+        await User.updateOne(
+          { _id: userId },
+          {
+            $push: {
+              friendList: {
+                user_id: myUserId,
+                room_chat_id: "",
+              },
+            },
             $pull: { requestFriends: myUserId },
           }
         );
