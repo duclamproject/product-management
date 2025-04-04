@@ -51,3 +51,19 @@ if (listButtonAcceptFriend.length > 0) {
   });
 }
 // End: Chức năng chấp nhận yêu cẩu kết bạn
+
+// Chức năng xóa bạn bè
+const listButtonDeleteFriend = document.querySelectorAll("[btn-delete-friend]");
+if (listButtonDeleteFriend.length > 0) {
+  listButtonDeleteFriend.forEach((button) => {
+    button.addEventListener("click", () => {
+      const conFirm = confirm("Bạn có muỗn xóa người bạn này không?");
+      if (conFirm == true) {
+        button.closest(".box-user").classList.add("deleted");
+        const userId = button.getAttribute("btn-delete-friend");
+        socket.emit("CLIENT_DELETE_FRIEND", userId);
+      }
+    });
+  });
+}
+// End: Chức năng chấp nhận yêu cẩu kết bạn

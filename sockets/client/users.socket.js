@@ -163,5 +163,32 @@ module.exports = async (res) => {
         );
       }
     });
+
+    // Người dùng xóa bạn bè
+    socket.on("CLIENT_DELETE_FRIEND", async (userId) => {
+      const myUserId = res.locals.user.id;
+
+      // console.log(myUserId); // ID của A
+      // console.log(userId); // ID của B
+
+      // Xóa id của B ở friendList của A
+      await User.updateOne(
+        {
+          _id: myUserId,
+        },
+        {
+          $pull: { friendList: { user_id: userId } },
+        }
+      );
+      // Xóa id của A vào friendList của B
+      await User.updateOne(
+        {
+          _id: userId,
+        },
+        {
+          $pull: { friendList: { user_id: myUserId } },
+        }
+      );
+    });
   });
 };

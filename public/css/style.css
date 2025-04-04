@@ -428,4 +428,13 @@
 .box-user.accepted [btn-accepted-friend] {
   display: inline-block;
 }
+.box-user.deleted [btn-is-friend] {
+  display: none;
+}
+.box-user.deleted [btn-delete-friend] {
+  display: none;
+}
+.box-user.deleted [btn-deleted-friend] {
+  display: inline-block;
+}
 /* End Box Users */
