@@ -35,6 +35,16 @@ module.exports = async (res) => {
           }
         );
       }
+
+      // Lấy độ dài acceptFriends của B trả về cho B
+      const inforUserB = await User.findOne({
+        _id: userId,
+      });
+      const lengthAcceptFriendsB = inforUserB.acceptFriends.length;
+      socket.broadcast.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", {
+        userId: userId,
+        lengthAcceptFriendsB: lengthAcceptFriendsB,
+      });
     });
 
     // Người dùng hủy gửi yêu cầu kết bạn

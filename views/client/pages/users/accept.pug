@@ -1,6 +1,6 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
-block main 
+block main
     .container.my-3
         include ../../partials/list-btn-users.pug
         .row 
@@ -36,5 +36,5 @@ block main
                                     btn-accepted-friend=user.id
                                     disabled
                                 ) Đã chấp nhận
-    block script 
-        script(src="/js/users.js")
+block script
+    script(src="/js/users.js")

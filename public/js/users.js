@@ -5,7 +5,7 @@ if (listButtonAddFriend.length > 0) {
     button.addEventListener("click", () => {
       button.closest(".box-user").classList.add("add");
       const userId = button.getAttribute("btn-add-friend");
-      console.log(userId);
+      // console.log(userId);
       socket.emit("CLIENT_ADD_FRIEND", userId);
     });
   });
@@ -67,3 +67,16 @@ if (listButtonDeleteFriend.length > 0) {
   });
 }
 // End: Chức năng chấp nhận yêu cẩu kết bạn
+
+// SERVER_RETURN_LENGTH_ACCEPT_FRIEND
+socket.on("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", (data) => {
+  const badgeUsersAccept = document.querySelector("[badge-users-accept]");
+  const userId = badgeUsersAccept.getAttribute("badge-users-accept");
+  // console.log(userId);
+
+  if (userId == data.userId) {
+    badgeUsersAccept.innerHTML = data.lengthAcceptFriendsB;
+  }
+});
+
+// End: SERVER_RETURN_LENGTH_ACCEPT_FRIEND
