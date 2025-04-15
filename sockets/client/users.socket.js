@@ -83,6 +83,14 @@ module.exports = async (res) => {
           }
         );
       }
+
+      // Khi A hủy yêu cầu kết bạn thì cập nhật lại số lượng accept friend bên B
+      const inforUserB = await User.findOne({ _id: userId });
+      const lengthAcceptFriendsB = inforUserB.acceptFriends.length;
+      socket.broadcast.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", {
+        userId: userId,
+        lengthAcceptFriendsB: lengthAcceptFriendsB,
+      });
     });
 
     // Người dùng từ chối yêu cầu kết bạn
