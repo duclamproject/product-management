@@ -1,6 +1,12 @@
 const express = require("express");
 const route = express.Router();
-const middleware = require("../../middlewares/client/auth.middleware");
+const authMiddleware = require("../../middlewares/client/auth.middleware");
+const chatMiddleware = require("../../middlewares/client/chat.middleware");
 const controller = require("../../controllers/client/chat.controller");
-route.get("/", middleware.requireAuth, controller.index);
+route.get(
+  "/:roomChatId",
+  chatMiddleware.isAccess,
+  authMiddleware.requireAuth,
+  controller.index
+);
 module.exports = route;
