@@ -1,4 +1,5 @@
 const User = require("../../models/user.model");
+const RoomChat = require("../../models/room-chat.model");
 
 module.exports = async (res) => {
   _io.once("connection", (socket) => {
@@ -153,11 +154,34 @@ module.exports = async (res) => {
       // console.log(myUserId); // ID của B
       // console.log(userId); // ID của A
 
-      // Thêm {user_id, room_chat_id} của A vào friendsList của B - Xóa id của A trong acceptFriends của B
+      // Lấy ra user đã tồn tại
       const exisUserAInB = await User.findOne({
         _id: myUserId,
         acceptFriends: userId,
       });
+      const exisUserBInA = await User.findOne({
+        _id: userId,
+        requestFriends: myUserId,
+      });
+
+      let roomChat;
+      if (exisUserAInB && exisUserBInA) {
+        roomChat = new RoomChat({
+          typeRoom: "friend",
+          users: [
+            {
+              user_id: userId,
+              role: "superAdmin",
+            },
+            {
+              user_id: myUserId,
+              role: "superAdmin",
+            },
+          ],
+        });
+        await roomChat.save();
+      }
+      // Thêm {user_id, room_chat_id} của A vào friendsList của B - Xóa id của A trong acceptFriends của B
 
       // console.log(exisUserAInB); // Là select tất cả của A
       if (exisUserAInB) {
@@ -167,7 +191,7 @@ module.exports = async (res) => {
             $push: {
               friendList: {
                 user_id: userId,
-                room_chat_id: "",
+                room_chat_id: roomChat.id,
               },
             },
 
@@ -177,10 +201,7 @@ module.exports = async (res) => {
       }
 
       //Thêm {user_id, room_chat_id} của B vào friendsList của A - Xóa id của B trong requestFriends của A
-      const exisUserBInA = await User.findOne({
-        _id: userId,
-        requestFriends: myUserId,
-      });
+
       if (exisUserBInA) {
         await User.updateOne(
           { _id: userId },
@@ -188,7 +209,7 @@ module.exports = async (res) => {
             $push: {
               friendList: {
                 user_id: myUserId,
-                room_chat_id: "",
+                room_chat_id: roomChat.id,
               },
             },
             $pull: { requestFriends: myUserId },

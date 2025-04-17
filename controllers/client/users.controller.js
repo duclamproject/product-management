@@ -90,6 +90,7 @@ module.exports.friends = async (req, res) => {
 
   const userId = res.locals.user.id;
   const myUser = await User.findOne({ _id: userId });
+  const friendList = myUser.friendList;
   const friendIds = myUser.friendList.map((friend) => friend.user_id);
 
   const users = await User.find({
@@ -100,6 +101,10 @@ module.exports.friends = async (req, res) => {
 
   // console.log(users);
 
+  users.forEach((user) => {
+    const inforUser = friendList.find((item) => item.user_id == user.id);
+    user.roomChatId = inforUser.room_chat_id;
+  });
   res.render("client/pages/users/friends.pug", {
     pageTitle: "Danh sách bạn bè",
     users: users,

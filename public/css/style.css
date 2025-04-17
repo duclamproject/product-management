@@ -435,6 +435,9 @@
 .box-user.deleted [btn-delete-friend] {
   display: none;
 }
+.box-user.deleted [messenger] {
+  display: none;
+}
 .box-user.deleted [btn-deleted-friend] {
   display: inline-block;
 }

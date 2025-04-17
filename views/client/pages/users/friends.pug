@@ -19,9 +19,19 @@ block main
                             div(class="inner-name") #{user.fullName}
                                 div(class="inner-buttons")
                                     a(
-                                        href="#"
+                                        href=`/chat/${user.roomChatId}`
                                         class="btn btn-sm btn-primary mr-1"
+                                        messenger
                                     ) Nhắn tin
+                                    button(
+                                        class="btn btn-sm btn-secondary mr-1"
+                                        btn-delete-friend=user.id
+                                    ) Xóa
+                                    button(
+                                        class="btn btn-sm btn-secondary mr-1"
+                                        btn-deleted-friend
+                                        disabled
+                                    ) Đã xóa
                         div(
                             class="inner-status "
                             status=user.statusOnline
