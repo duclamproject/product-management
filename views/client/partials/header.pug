@@ -6,7 +6,7 @@ header.header
                 .inner-logo 
                     a(href="/") 
                         img(src=settingGeneral.logo, alt="logo")
-            .col-4 
+            .col-3
                 form(
                     action="/search"
                     method="GET"
@@ -23,7 +23,7 @@ header.header
                             type="submit"
                             class="btn btn-primary"
                         ) Tìm
-            .col-7
+            .col-8
                 .inner-menu 
                     ul(class ="ul-nav")
                         li 
@@ -39,6 +39,8 @@ header.header
                             //-     a(href="/chat") Chat 
                             li      
                                 a(href="/users/friends") Bạn bè
+                            li      
+                                a(href="/rooms-chat") Phòng chat
                             li 
                                 a(href="/user/infor") #{user.fullName} 
                             li 
