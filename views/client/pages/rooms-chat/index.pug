@@ -1,6 +1,8 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
+include ../../mixins/alert.pug
 block main
+    +alert-success(5000)
     .container.my-3
         .row 
             .col-12 
@@ -10,20 +12,49 @@ block main
                 a(
                     href="/rooms-chat/create"
                     class="btn btn-sm btn-success mr-1"
-                ) Tạo phòng chat
+                ) + Tạo phòng chat
         .row
-            .col-6
-                div(class="box-room")
-                    div(class="inner-avatar")
-                        img(
-                            src="https://robohash.org/hicveldicta.png"
-                            alt="Phòng abc"
-                        )
-                    div(class="inner-info")
-                        div(class="inner-name") Phòng abc
-                            div(class="inner-buttons")
-                                a(
-                                    href="#"
-                                    class="btn btn-sm btn-primary mr-1"
-                                ) Nhắn tin
-block script
+            each room in roomsChat
+                if(room.typeRoom=="friend")
+                    .col-6
+                        div(class="box-room")
+                            div(class="inner-avatar")
+                                img(
+                                    src="images/friend-avatar.jpg"
+                                    alt="rooms chat"
+                                )
+                            div(class="inner-info") 
+                                div(class="inner-name") #{room.title}
+                                    div(class="inner-buttons mt-1")
+                                        a(
+                                            href=`chat/${room.id}`
+                                            class="btn btn-sm btn-primary mr-1"
+                                        ) Nhắn tin
+                                        a(
+                                            button-delete-room 
+                                            room-chat-id=room.id
+                                            class="btn btn-sm btn-danger mr-1"
+                                        ) Xóa phòng chat
+                else 
+                    .col-6
+                        div(class="box-room")
+                            div(class="inner-avatar")
+                                img(
+                                    src="images/group-avater.jpg"
+                                    alt="rooms chat"
+                                )
+                            div(class="inner-info")
+                                div(class="inner-name") #{room.title}
+                                    div(class="inner-buttons mt-1")
+                                        a(
+                                            href=`chat/${room.id}`
+                                            class="btn btn-sm btn-primary mr-1"
+                                        ) Nhắn tin
+            form(
+                action="" 
+                method="POST"
+                id="form-delete-room"
+                data-path = `rooms-chat/delete-room/`
+            ) 
+block script 
+    script(src="js/room-chat.js") 

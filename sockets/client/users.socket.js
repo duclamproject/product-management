@@ -150,7 +150,7 @@ module.exports = async (res) => {
     // Người dùng chấp nhận yêu cầu kết bạn
     socket.on("CLIENT_ACCEPT_FRIEND", async (userId) => {
       const myUserId = res.locals.user.id;
-
+      const myName = res.locals.user.fullName;
       // console.log(myUserId); // ID của B
       // console.log(userId); // ID của A
 
@@ -159,14 +159,21 @@ module.exports = async (res) => {
         _id: myUserId,
         acceptFriends: userId,
       });
+
       const exisUserBInA = await User.findOne({
         _id: userId,
         requestFriends: myUserId,
       });
 
+      const userA = await User.findOne({
+        _id: userId,
+      });
+
+      const nameUserA = userA.fullName;
       let roomChat;
       if (exisUserAInB && exisUserBInA) {
         roomChat = new RoomChat({
+          title: `${nameUserA}, ${myName}`,
           typeRoom: "friend",
           users: [
             {
