@@ -154,6 +154,7 @@ if (uploadImage) {
   });
 }
 // End Upload Preview
+
 // Clear Image Preview
 const clearImagePreview = document.querySelector("[clear-image-preview]");
 if (clearImagePreview) {

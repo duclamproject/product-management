@@ -131,7 +131,7 @@ module.exports.forgotPasswordPost = async (req, res) => {
 
   // Việc 2: Gửi mã OTP qua email của user
   const subject = "Mã OTP để xác minh lấy lại mật khẩu";
-  const html = `Mã OTP xác minh lấy lại mật khẩu của bạn là: <b>${otp}</b>.<br> Thời hạn sử dụng của mã là 3 phút và lưu ý không được để lộ mã OTP`;
+  const html = `Mã OTP xác minh lấy lại mật khẩu của bạn là: <b>${otp}</b>.<br> Thời hạn sử dụng của mã là 3 phút và lưu ý không được để lộ mã OTP cho bất kỳ ai.`;
   sendMailHelper.sendMail(email, subject, html);
   res.redirect(`/user/password/otp?email=${email}`);
 };

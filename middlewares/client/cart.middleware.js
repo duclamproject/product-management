@@ -4,7 +4,7 @@ module.exports.cart = async (req, res, next) => {
     // Khi chưa đăng nhập
     const cart = new Cart();
     await cart.save();
-    console.log(cart);
+    // console.log(cart);
     const expiresTime = 365 * 24 * 60 * 60 * 1000;
     res.cookie("cartId", cart.id, {
       expires: new Date(Date.now() + expiresTime),

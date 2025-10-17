@@ -25,7 +25,6 @@ module.exports.index = async (req, res) => {
 
   // Pagination
   // Công thức phân trang (Skip)= (CurrentPage - 1) * LimtIems;
-
   const countProducts = await Product.countDocuments(find);
   const objectPagination = paginationHelper(
     {
